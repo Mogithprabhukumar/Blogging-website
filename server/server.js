@@ -13,6 +13,7 @@ import {getAuth} from "firebase-admin/auth"
 import dns from 'dns';
 import multer from 'multer';
 import cloudinary  from 'cloudinary';
+import Notification from "./Schema/Notification.js";
 
 dns.setServers(['8.8.8.8', '8.8.4.4']); // Google DNS
 
@@ -451,6 +452,50 @@ server.post("/get-blog", (req,res) => {
   // .catch(err => {
   //   return res.status(500).json({ error: err.message });
   // })
+})
+
+server.post("/like-blog", verifyJWT, (req, res) => {
+
+  let user_id = req.user;
+
+  let { _id, islikedByUser } = req.body;
+  let incrementVal = !islikedByUser ? 1 : -1;
+
+  Blog.findOneAndUpdate({ _id}, { $inc: { "activity.total_likes": incrementVal }})
+  .then(blog => {
+    if(!islikedByUser){
+      let like = new Notification({
+        type: "like",
+        blog: _id,
+        notification_for: blog.author,
+        user: user_id
+      })
+
+      like.save().then(notification => {
+        return res.status(200).json({ liked_by_user: true})
+      })
+    } else{
+      Notification.findOneAndDelete({ user: user_id, blog: _id, type: "like"})
+      .then(data => {
+        return res.status(200).json({ liked_by_user: false })
+      })
+      .catch(err => {
+        return res.status(500).json({ error: err.message})
+      })
+    }
+  })
+}) 
+
+server.post("/isliked-by-user", verifyJWT, (req,res) => {
+  let user_id = req.user;
+  let { _id } = req.body;
+  Notification.exists({ user: user_id, type: "like", blog: _id})
+  .then(result => {
+    return res.status(200).json({ result })
+  })
+  .catch(err => {
+    return res.status(500).json({ error: err.message})
+  })
 })
 
  server.listen(PORT, () => {
