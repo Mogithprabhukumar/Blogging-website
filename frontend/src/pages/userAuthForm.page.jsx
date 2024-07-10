@@ -38,9 +38,9 @@ const UserAuthForm=({ type })=>{
 
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (e) => {
 
-        event.preventDefault();
+        e.preventDefault();
 
         if (!authForm.current || !(authForm.current instanceof HTMLFormElement)) {
             console.error("authForm.current is not an instance of HTMLFormElement or is null:", authForm.current);
@@ -51,9 +51,11 @@ const UserAuthForm=({ type })=>{
         console.log("Server Route:", serverRoute);  // Debugging statement
         console.log("Form Type:", type);
 
-        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
-        let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password 
+        // let emailRegex = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/; // regex for email
+        // let passwordRegex = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
 
+        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
+        let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
         
 
         //formData
@@ -186,4 +188,4 @@ const UserAuthForm=({ type })=>{
 </AnimationWrapper>
     )
 }
-export default UserAuthForm;
+export default UserAuthForm;
