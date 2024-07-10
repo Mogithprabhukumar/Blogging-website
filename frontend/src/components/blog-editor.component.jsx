@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import logo from "../imgs/logo.png";
 import AnimationWrapper from "../common/page-animation";
 import defaultBanner from "../imgs/blog banner.png";
@@ -10,10 +10,12 @@ import EditorJS from "@editorjs/editorjs";
 import { tools } from "./tools.component";
 import axios from "axios";
 import { UserContext } from "../App";
+// import UserAuthForm from "../pages/userAuthForm.page";
 
 const BlogEditor = () => {
   let { blog, blog: { title, banner, content, tags, des }, setBlog, textEditor, setTextEditor, setEditorState } = useContext(EditorContext);
   let { userAuth: { access_token } } = useContext(UserContext);
+  let { blog_id } = useParams();
   let navigate = useNavigate();
   const [wordCount, setWordCount] = useState(0);
 
@@ -21,7 +23,7 @@ const BlogEditor = () => {
     if (!textEditor.isReady) {
       const editor = new EditorJS({
         holder: "text-Editor",
-        data: content,
+        data: Array.isArray(content) ? content[0] : content,
         tools: tools,
         placeholder: "Let's write an awesome story",
         onChange: async () => {
@@ -110,16 +112,16 @@ const BlogEditor = () => {
         textEditor.save().then(content=>{
           const desString = des.length ? des : "";
           const readingTime=setReadingTime(wordCount);
+          // const author = userAuth?.user || { personal_info: { username: "Unknown Author" } };
           let blogObj = { 
-            title, banner, des: desString, content, tags,wordCount,readingTime, draft: true 
-          }
+            title, banner, des: desString, content, tags,wordCount,readingTime, draft: true };
 
           // console.log("Blog Object:", blogObj); //debug
 
 
 
-          axios.post(import.meta.env.VITE_SERVER_DOMAIN+"/create-blog", blogObj, {
-            headers: { 'Authorization': `Bearer ${access_token}` }
+          axios.post(import.meta.env.VITE_SERVER_DOMAIN+"/create-blog", { ...blogObj, id: blog_id }, {
+            headers: { 'Authorization': `Bearer ${access_token} `}
           }).then(()=>{
             e.target.classList.remove('disable');
             toast.dismiss(loadingToast);
