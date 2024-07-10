@@ -28,8 +28,8 @@ dns.setServers(['8.8.8.8', '8.8.4.4']); // Google DNS
 
  });
 
- let emailRegex = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/; // regex for email
-let passwordRegex = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
+ let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
+let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
  server.use(express.json());
  server.use(cors())
 
@@ -236,9 +236,18 @@ let passwordRegex = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,20}$/; // regex for passwo
 
   let blog_id=id || title.replace(/[^a-zA-Z0-9]/g,' ').replace(/\s+/g,"-").trim()+nanoid();
   
-  
+  if(id){
+    Blog.findOneAndUpdate({ blog_id }, { title, des, banner, content, tags, draft: draft ? draft: false})
+    .then(() => {
+      return res.status(200).json({ id: blog_id });
+    })
+    .catch(err => {
+      return res.status(500).json({ error: err.message})
+    })
+  }else{
+
     let blog= new Blog({
-      title, des,banner,content,tags,wordCount,readingTime, author: authorId, blog_id,draft: Boolean(draft)
+      title, des,banner,content,tags, author: authorId, blog_id,draft: Boolean(draft)
     })
     blog.save().then(blog=>{
     let incrementVal=draft?0: 1;
@@ -254,7 +263,7 @@ let passwordRegex = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,20}$/; // regex for passwo
   .catch(err=>{
     return res.status(500).json({error: err.message})
   })
-  
+  }
 })
 
 server.post('/latest-blogs',(req,res)=>{
