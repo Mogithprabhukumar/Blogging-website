@@ -44,7 +44,7 @@ const UserAuthForm=({ type })=>{
 
         if (!authForm.current || !(authForm.current instanceof HTMLFormElement)) {
             console.error("authForm.current is not an instance of HTMLFormElement or is null:", authForm.current);
-            return toast.error("Form reference is not valid.");
+            return toast.error("Reload the page");
         }
 
         let serverRoute = type == "sign-in" ? "/signin" : "/signup";
