@@ -73,40 +73,38 @@ Steps to Run the Project
      npm run dev
 
   6.Access the Application:
-    Open your browser and go to http://localhost:3000 to view the application.
+    Open your browser and go to http://localhost:5173 to view the application.
     
 Sample Screenshots
 Here are some sample screenshots of the application:
 
 1.Login Page:
 
-  ![login](https://github.com/user-attachments/assets/c9c9af92-f815-4160-8a98-abb7258ea478)
-
+  ![image](https://github.com/user-attachments/assets/068dd7d6-c162-436f-a8d3-610e379c596e)
 
 2.Sign up Page:
 
-  ![signup](https://github.com/user-attachments/assets/731302a1-09d0-43b0-b16b-c662c15dbcbf)
-
+  ![image](https://github.com/user-attachments/assets/b909e33e-155f-4e26-9ecf-771b6b3ea2c0)
 
 3.Home Page:
 
-  ![Homepage](https://github.com/user-attachments/assets/84f3df82-dc5d-47d4-8e67-c091363a0554)
+![image](https://github.com/user-attachments/assets/c42918e7-3589-4a90-b7db-9e6449ef3413)
 
 4.Write Page:
 
-  ![write page](https://github.com/user-attachments/assets/23d1ded1-3eea-42d8-8eae-cf748508ed93)
+  ![image](https://github.com/user-attachments/assets/56212a35-ce5c-4be7-942e-23a8e0357d7e)
 
 5.Preview Page:
-
-  ![preview page](https://github.com/user-attachments/assets/732e99fd-c3d9-4d6e-bf08-edae9589eddc)
+        ![image](https://github.com/user-attachments/assets/2e2446e4-e6bb-4879-96bc-3bf2224d28d5)
 
 6.Profile Page:
 
-  ![profile page](https://github.com/user-attachments/assets/8b3fe0c7-221f-4348-a1cf-e29c3bf65609)
+  ![image](https://github.com/user-attachments/assets/bde8c05c-a94a-40cb-987c-51a8f7d0c085)
 
 7.Deatail Blog Page
 
-  ![detail blog and like](https://github.com/user-attachments/assets/7cf63067-7175-4291-a92d-e91250f39ce8)
+![image](https://github.com/user-attachments/assets/f6a72acb-81ba-4c52-8e4a-9cde3005b403)
+
 
 
 Working Application  Link:
